@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Verhindert automatische Telefon-Erkennung -->
+  <meta name="format-detection" content="telephone=no">
+  <title>tobolin_03-24-05000</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html { background-color: #e0e0e0; }
+    body {
+      position: relative;
+      font-family: 'Source Sans Pro', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom, #e0e0e0 0%, #f5f5f5 30%, #ffffff 100%);
+    }
+    .header-stripes {
+      position: absolute;
+      top: calc(3rem + 60px);
+      left: 1.5rem;
+      width: 45px;
+      height: 100vh;
+      display: flex;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .header-stripes .stripe { flex: 1; }
+    .header-stripes .stripe1 { background: linear-gradient(to bottom, #2FB24B 0%, rgba(47,178,75,0) 75%); }
+    .header-stripes .stripe2 { background: linear-gradient(to bottom, #652E8D 0%, rgba(101,46,141,0) 75%); }
+    .header-stripes .stripe3 { background: linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0) 75%); }
+
+    header {
+      position: relative;
+      padding: 3rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      z-index: 1;
+    }
+    header img { height: 60px; margin-right: 1rem; }
+    header h1 {
+      margin: 0;
+      text-align: right;
+      flex: 1;
+      color: #000;
+      font-size: clamp(1.2rem, 6vw, 2rem);
+    }
+
+    a[href^="tel:"] {
+      color: inherit !important;
+      text-decoration: none !important;
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+
+    .product-widget {
+      background: #fff;
+      border: 1px solid #ededed;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto 1rem;
+      padding: 1rem;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+    .product-widget .product-info { flex: 1; }
+    .product-widget .product-info .product-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+    }
+    .product-widget .product-info .product-number {
+      font-size: 0.875rem;
+      color: #555;
+      margin: 0;
+    }
+    .product-widget .product-image img {
+      max-width: 80px;
+      height: auto;
+      margin-left: 1rem;
+      border-radius: 4px;
+    }
+
+    main { padding: 1rem; }
+    .card {
+      background: #fff;
+      border: 1px solid #ededed;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin: 0 auto 1rem;
+      padding: 1rem;
+      width: 90%;
+      max-width: 600px;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin: 0 0 0.75rem;
+      color: #000;
+    }
+    .btn {
+      display: block;
+      background: #2FB24B;
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1rem;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    .btn:hover { background-color: #256528; }
+
+    .social-text {
+      text-align: center;
+      color: #000;
+      margin: 2rem auto;
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      padding: 0 1rem;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-icons {
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2FB24B;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      text-decoration: none;
+    }
+    .social-icons a svg {
+      height: 36px;
+      width: auto;
+      display: block;
+      fill: #fff;
+    }
+    .social-icons a:hover { background-color: #256528; }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      padding: 0 0 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    footer .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      box-sizing: border-box;
+    }
+
+    .language-selector {
+      text-align: center;
+      margin: 1rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .language-selector label {
+      margin-right: 0.5rem;
+      font-weight: 600;
+    }
+    .language-selector select {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    footer .footer-content {
+  /* skaliert die Footer-Schrift zwischen 0.75rem und 1rem je nach Viewport-Breite */
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  /* verhindert ungewollte Umbrüche innerhalb der Zeilen (nur die <br> bleiben erhalten) */
+  white-space: nowrap;
+}
+  </style>
+</head>
+<body>
+  <div class="header-stripes">
+    <div class="stripe stripe1"></div>
+    <div class="stripe stripe2"></div>
+    <div class="stripe stripe3"></div>
+  </div>
+
+  <header>
+    <img src="Tobolin_Digital.svg" alt="TOBOLIN Logo" />
+    <h1 data-i18n="header-title">PRODUKTINFORMATIONEN</h1>
+  </header>
+
+  <main>
+    <div class="product-widget">
+      <div class="product-info">
+        <p class="product-name" data-i18n="product-name">Artikelbezeichnung</p>
+        <p class="product-number" data-i18n="product-number">XX-XX-XXXXX</p>
+      </div>
+      <div class="product-image">
+        <img src="de_produktbild_03-24-05000.PNG" alt="Produktbild Artikelbezeichnung" />
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="card-etikett">Etikett</h2>
+      <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+    <div class="card">
+      <h2 data-i18n="card-sdb">Sicherheitsdatenblatt</h2>
+      <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+    <div class="card">
+      <h2 data-i18n="card-tm">Technisches Merkblatt</h2>
+      <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+    <div class="card">
+      <h2 data-i18n="card-ua">Gebrauchsanleitung</h2>
+      <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+    <div class="card">
+      <h2 data-i18n="card-ra">Risikoanalyse</h2>
+      <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+    <div class="card">
+      <h2 data-i18n="card-review-title">Eine ehrliche Meinung von dir – tausend Dank von uns!</h2>
+      <a id="review-link" href="#" class="btn" data-i18n="btn-open">Öffnen</a>
+    </div>
+
+    <div class="social-text">
+      <span data-i18n="social-line1">Wachse mit uns und werde Teil der Community!</span><br>
+      <span data-i18n="social-line2">Das TOBOLIN-Team sagt Danke!</span>
+    </div>
+
+    <div class="social-icons">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/TobolinBauChemie/?locale=de_DE" target="_blank" aria-label="Facebook">
+        <svg viewBox="0 0 320 512" aria-hidden="true">
+          <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+        </svg>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/tobolin_smarte_bauprodukte/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 448 512" aria-hidden="true">
+          <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+        </svg>
+      </a>
+      <!-- Pinterest -->
+      <a href="https://de.pinterest.com/tobolin_marawe/" target="_blank" aria-label="Pinterest">
+        <svg viewBox="0 0 384 512" aria-hidden="true">
+          <path d="M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z"/>
+        </svg>
+      </a>
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/@tobolin1411" target="_blank" aria-label="YouTube">
+        <svg viewBox="0 0 576 512" aria-hidden="true">
+          <path d="M549.655 124.083c-6.281-23.648-24.781-42.242-48.438-48.572C458.688 64 288 64 288 64S117.312 64 74.783 75.511C51.125 81.832 32.625 100.436 26.281 124.083C16 162.702 16 256 16 256s0 93.298 10.281 131.917C32.625 411.567 51.125 430.171 74.783 436.501C117.312 448 288 448 288 448s170.688 0 213.217-11.499C524.875 430.171 543.375 411.567 556.281 388.917C566.562 349.298 566.562 256 566.562 256s0-93.298-10.281-131.917zM230.4 345.6V166.4l115.2 89.6-115.2 89.6z"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="language-selector">
+      <label for="lang-select" data-i18n="label-language">Sprache:</label>
+      <select id="lang-select">
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <span data-i18n="footer-line1">MARAWE GmbH &amp; Co. KG • An der Irler Höhe 3b • 93055 Regensburg</span><br>
+      <span data-i18n="footer-line2">Tel: +49 941 37847200 • E-Mail: tobolin@marawe.de • www.tobolin.de</span><br><br>
+      <span data-i18n="footer-line3">Copyright © TOBOLIN – Alle Rechte vorbehalten</span><br>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      de: {
+        'header-title': 'PRODUKTINFORMATIONEN',
+        'product-name': 'Steinschutz HP 5 L',
+        'product-number': '03-24-05000 / 03-24-05000-FBA / 03-24-10000-FBA',
+        'card-etikett': 'Etikett',
+        'card-sdb': 'Sicherheitsdatenblatt',
+        'card-tm': 'Technisches Merkblatt',
+        'card-ua': 'Gebrauchsanleitung',
+        'card-ra': 'Risikoanalyse',
+        'card-review-title': 'Eine ehrliche Meinung von dir – tausend Dank von uns!',
+        'btn-open': 'Öffnen',
+        'label-language': 'Sprache:',
+        'social-line1': 'Wachse mit uns und werde Teil der Community!',
+        'social-line2': 'Das TOBOLIN-Team sagt Danke!',
+        'footer-line1': 'MARAWE GmbH & Co. KG • An der Irler Höhe 3b • 93055 Regensburg',
+        'footer-line2': 'Tel: +49 941 37847200 • E-Mail: tobolin@marawe.de • www.tobolin.de',
+        'footer-line3': 'Copyright © TOBOLIN – Alle Rechte vorbehalten',
+        'review-link': 'https://www.amazon.de/review/create-review/?asin=B09VL6DDGY'
+      },
+    };
+
+    const docPaths = {
+      de: {
+        'card-etikett': 'de_etikett-rueckseite_03-24.pdf',
+        'card-sdb':    'DE_msds_2022-04-11_0324.pdf',
+        'card-tm':     'de_technische-merkblatt_03-24.pdf',
+        'card-ua':     'de_anleitung_03-24.pdf',
+        'card-ra':     '03-24_Steinschutz_Risikobewertung.pdf'
+      },
+    };
+
+    function updateContent(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      // Review-Link href
+      if (translations[lang] && translations[lang]['review-link']) {
+        document.getElementById('review-link').href = translations[lang]['review-link'];
+      }
+      // Dokument-Links
+      document.querySelectorAll('.card').forEach(card => {
+        const key = card.querySelector('[data-i18n]').getAttribute('data-i18n');
+        const link = card.querySelector('a.btn');
+        if (docPaths[lang] && docPaths[lang][key]) {
+          link.href = docPaths[lang][key];
+        }
+      });
+      document.documentElement.lang = lang;
+    }
+
+    document.getElementById('lang-select').addEventListener('change', e => {
+  const lang = e.target.value;
+  updateContent(lang);
+  // Gewählte Sprache speichern
+  localStorage.setItem('lang', lang);
+});
+
+    // Aus localStorage holen (sonst 'de' als Default)
+const storedLang = localStorage.getItem('lang') || 'de';
+
+// Select auf gespeicherte Sprache setzen
+document.getElementById('lang-select').value = storedLang;
+
+// Content initial mit gespeicherter Sprache laden
+updateContent(storedLang);
+
+  </script>
+</body>
+</html>
