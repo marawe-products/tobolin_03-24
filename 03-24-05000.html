@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Verhindert automatische Telefon-Erkennung -->
   <meta name="format-detection" content="telephone=no">
   <title>tobolin_03-24-05000</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
@@ -57,7 +56,7 @@
 
     .product-widget {
       background: #fff;
-      border: 1px solid #ededed;
+      border: 1px solid #2FB24B;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
@@ -119,7 +118,7 @@
       width: fit-content;
       margin: 0 auto;
     }
-    .btn:hover { background-color: #256528; }
+    .btn:hover { background-color: #652E8D; }
 
     .social-text {
       text-align: center;
@@ -156,7 +155,7 @@
       display: block;
       fill: #fff;
     }
-    .social-icons a:hover { background-color: #256528; }
+    .social-icons a:hover { background-color: #652E8D; }
 
     footer {
       text-align: center;
@@ -171,6 +170,8 @@
       margin: 0 auto;
       padding: 0 1rem;
       box-sizing: border-box;
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      white-space: nowrap;
     }
 
     .language-selector {
@@ -187,12 +188,6 @@
       padding: 0.5rem;
       font-size: 1rem;
     }
-    footer .footer-content {
-  /* skaliert die Footer-Schrift zwischen 0.75rem und 1rem je nach Viewport-Breite */
-  font-size: clamp(0.75rem, 1.2vw, 1rem);
-  /* verhindert ungewollte Umbrüche innerhalb der Zeilen (nur die <br> bleiben erhalten) */
-  white-space: nowrap;
-}
   </style>
 </head>
 <body>
@@ -209,31 +204,32 @@
         <p class="product-number" data-i18n="product-number">XX-XX-XXXXX</p>
       </div>
       <div class="product-image">
-        <img src="de_produktbild_03-24-05000.png" alt="Produktbild Artikelbezeichnung" />
+        <img src="de_produktbild_03-24-05000.png" alt="Produktbild 03-24-05000" />
       </div>
     </div>
 
-    <div class="card">
+    <!-- Alle Karten rendern, Sichtbarkeit wird durch JS gesteuert -->
+    <div class="card" data-card-key="card-etikett">
       <h2 data-i18n="card-etikett">Etikett</h2>
       <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
-    <div class="card">
+    <div class="card" data-card-key="card-sdb">
       <h2 data-i18n="card-sdb">Sicherheitsdatenblatt</h2>
       <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
-    <div class="card">
+    <div class="card" data-card-key="card-tm">
       <h2 data-i18n="card-tm">Technisches Merkblatt</h2>
       <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
-    <div class="card">
+    <div class="card" data-card-key="card-ua">
       <h2 data-i18n="card-ua">Gebrauchsanleitung</h2>
       <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
-    <div class="card">
+    <div class="card" data-card-key="card-ra">
       <h2 data-i18n="card-ra">Risikoanalyse</h2>
       <a href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
-    <div class="card">
+    <div class="card" data-card-key="card-review-title">
       <h2 data-i18n="card-review-title">Eine ehrliche Meinung von dir – tausend Dank von uns!</h2>
       <a id="review-link" href="#" class="btn" data-i18n="btn-open">Öffnen</a>
     </div>
@@ -290,7 +286,7 @@
     const translations = {
       de: {
         'header-title': 'PRODUKTINFORMATIONEN',
-        'product-name': 'Steinschutz HP 5 L',
+        'product-name': 'Steinschutz HP 5 l',
         'product-number': '03-24-05000 / 03-24-05000-FBA',
         'card-etikett': 'Etikett',
         'card-sdb': 'Sicherheitsdatenblatt',
@@ -305,12 +301,13 @@
         'footer-line1': 'MARAWE GmbH & Co. KG • An der Irler Höhe 3b • 93055 Regensburg',
         'footer-line2': 'Tel: +49 941 37847200 • E-Mail: tobolin@marawe.de • www.tobolin.de',
         'footer-line3': 'Copyright © TOBOLIN – Alle Rechte vorbehalten',
-        'review-link': 'https://www.amazon.de/review/create-review/?asin=B09VL6DDGY'
+        'review-link': 'https://www.amazon.de/review/create-review/?asin='
       },
     };
 
     const docPaths = {
       de: {
+        enabledCards: ['card-etikett', 'card-sdb', 'card-tm', 'card-ua', 'card-ra', 'card-review-title'],
         'card-etikett': '03-24-05000_Etikett_DE.pdf',
         'card-sdb':    '03-24_SDB_DE.pdf',
         'card-tm':     '03-24_TM_DE.pdf',
@@ -320,43 +317,47 @@
     };
 
     function updateContent(lang) {
+      // i18n Texte
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
           el.textContent = translations[lang][key];
         }
       });
-      // Review-Link href
-      if (translations[lang] && translations[lang]['review-link']) {
+
+      // Review-Link
+      if (translations[lang]?.['review-link']) {
         document.getElementById('review-link').href = translations[lang]['review-link'];
       }
-      // Dokument-Links
+
+      // Karten anzeigen/verstecken und Links setzen
+      const enabled = docPaths[lang]?.enabledCards || [];
       document.querySelectorAll('.card').forEach(card => {
-        const key = card.querySelector('[data-i18n]').getAttribute('data-i18n');
-        const link = card.querySelector('a.btn');
-        if (docPaths[lang] && docPaths[lang][key]) {
-          link.href = docPaths[lang][key];
+        const key = card.getAttribute('data-card-key');
+        if (enabled.includes(key)) {
+          card.style.display = '';
+          const link = card.querySelector('a.btn');
+          if (docPaths[lang][key]) {
+            link.href = docPaths[lang][key];
+          }
+        } else {
+          card.style.display = 'none';
         }
       });
+
       document.documentElement.lang = lang;
     }
 
     document.getElementById('lang-select').addEventListener('change', e => {
-  const lang = e.target.value;
-  updateContent(lang);
-  // Gewählte Sprache speichern
-  localStorage.setItem('lang', lang);
-});
+      const lang = e.target.value;
+      updateContent(lang);
+      localStorage.setItem('lang', lang);
+    });
 
-    // Aus localStorage holen (sonst 'de' als Default)
-const storedLang = localStorage.getItem('lang') || 'de';
-
-// Select auf gespeicherte Sprache setzen
-document.getElementById('lang-select').value = storedLang;
-
-// Content initial mit gespeicherter Sprache laden
-updateContent(storedLang);
-
+    // Immer Deutsch als Startsprache
+const initialLang = 'de';
+document.getElementById('lang-select').value = initialLang;
+updateContent(initialLang);
   </script>
 </body>
 </html>
